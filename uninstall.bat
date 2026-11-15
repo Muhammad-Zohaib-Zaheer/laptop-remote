@@ -17,7 +17,7 @@ if %errorlevel% NEQ 0 (
 if exist "%~dp0uninstall.ps1" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0uninstall.ps1"
 ) else (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "$f=Join-Path $env:TEMP 'laptop-remote-uninstall.ps1'; Invoke-WebRequest 'https://raw.githubusercontent.com/zuhaibx69/laptop-remote/main/uninstall.ps1' -OutFile $f -UseBasicParsing; & $f"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "$f=Join-Path $env:TEMP 'laptop-remote-uninstall.ps1'; Invoke-WebRequest 'https://raw.githubusercontent.com/Muhammad-Zohaib-Zaheer/laptop-remote/main/uninstall.ps1' -OutFile $f -UseBasicParsing; & $f"
 )
 
 echo.

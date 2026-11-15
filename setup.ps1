@@ -8,7 +8,7 @@
 #>
 $ErrorActionPreference = "Stop"
 
-$Repo        = "https://github.com/zuhaibx69/laptop-remote"   # the public project
+$Repo        = "https://github.com/Muhammad-Zohaib-Zaheer/laptop-remote"   # the public project
 $Branch      = "main"
 $Install     = Join-Path $env:USERPROFILE "laptop-remote"     # where it is set up
 $Cloudflared = "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe"

@@ -18,7 +18,7 @@ REM Use the setup script next to this file if present, otherwise fetch it.
 if exist "%~dp0setup.ps1" (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0setup.ps1"
 ) else (
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "$f=Join-Path $env:TEMP 'laptop-remote-setup.ps1'; Invoke-WebRequest 'https://raw.githubusercontent.com/zuhaibx69/laptop-remote/main/setup.ps1' -OutFile $f -UseBasicParsing; & $f"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "$f=Join-Path $env:TEMP 'laptop-remote-setup.ps1'; Invoke-WebRequest 'https://raw.githubusercontent.com/Muhammad-Zohaib-Zaheer/laptop-remote/main/setup.ps1' -OutFile $f -UseBasicParsing; & $f"
 )
 
 echo.
