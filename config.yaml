@@ -1,0 +1,95 @@
+# Laptop Remote -- control this laptop from the phone, from anywhere.
+# Every setting lives here once; the code only reads it. Paths are relative to
+# this folder. Restart the server (stop.bat, start.bat) after a change.
+
+server:
+  host: 127.0.0.1               # only this laptop and the tunnel can reach it
+  port: 8095
+
+# The phone logs in with a secret key, created on the first start and kept in
+# this file. Delete the file to make a new key (every phone must log in again).
+secret_file: data/secret.json
+
+# Live screen sent to the phone.
+screen:
+  max_side: 1280                # pixels; smaller = less mobile data, faster
+  quality: 60                   # JPEG quality 1-95
+  max_fps: 12                   # measured: one frame takes ~77 ms here
+  idle_check_ms: 150            # screen unchanged: look again after this long
+
+# Sarah, the voice assistant (optional). If she runs on this laptop, the server
+# hands her what you type on the phone's Sarah tab; if not, that tab simply says
+# she is not running. This project needs no other part of her.
+sarah:
+  url: http://127.0.0.1:8091    # must match `remote.port` in pc-brain's config.yaml
+
+# Buttons on the phone. Each is a command run on the laptop.
+# confirm: true = the phone asks "are you sure?" first.
+actions:
+  lock:      {cmd: [rundll32.exe, "user32.dll,LockWorkStation"], confirm: true}
+  sleep:     {cmd: [rundll32.exe, "powrprof.dll,SetSuspendState", "0,1,0"], confirm: true}
+  restart:   {cmd: [shutdown, /r, /t, "30"], confirm: true}
+  shutdown:  {cmd: [shutdown, /s, /t, "30"], confirm: true}
+  cancel shutdown: {cmd: [shutdown, /a]}
+  task manager: {cmd: [taskmgr.exe]}
+
+# Media keys on the phone. Names as in Sarah's brain/keys.py.
+media:
+  previous: [media previous]
+  play/pause: [media play]
+  next: [media next]
+
+# Key buttons above the phone's keyboard; the keys are pressed together.
+keys:
+  Enter: [enter]
+  Back: [backspace]
+  Del: [delete]
+  Esc: [esc]
+  Tab: [tab]
+  "←": [left]
+  "↑": [up]
+  "↓": [down]
+  "→": [right]
+  Win: [win]
+  Alt+Tab: [alt, tab]
+  Copy: [ctrl, c]
+  Paste: [ctrl, v]
+  Undo: [ctrl, z]
+  All: [ctrl, a]
+  Close: [alt, f4]
+  Desktop: [win, d]
+# Key names Sarah's brain/keys.py does not know, and their Windows key codes.
+key_codes: {backspace: 8, delete: 46}
+
+# The PowerShell box on the phone. false = no commands can be run.
+shell:
+  enabled: true
+  timeout_s: 30
+  max_output: 20000             # characters sent back
+
+# The tunnel: gives the laptop a public https address without a fixed IP,
+# without opening a port on the router, and works behind any NAT.
+tunnel:
+  enabled: true
+  exe: tools/cloudflared.exe
+  # Empty token = a free "quick tunnel": no account needed, but the address
+  # changes each time the tunnel starts (it is pushed to the phone, below).
+  # With your own domain on Cloudflare: create a tunnel in the dashboard
+  # (Zero Trust > Networks > Tunnels), paste its token here and its address
+  # in hostname. The address then never changes.
+  token: ""
+  hostname: ""                  # e.g. laptop.example.com
+  restart_after_s: 10           # the tunnel died: start it again after this long
+
+# Push the tunnel address to the phone. Install the free "ntfy" app on the
+# iPhone and subscribe to the topic printed in logs/remote.log.
+push:
+  enabled: true
+  server: https://ntfy.sh
+  # true = the link in the notification logs in at once. It then passes
+  # through ntfy's server; false = you type the key once per new address.
+  include_key: true
+
+app: app/dist                   # the built phone app (npm run build in app/)
+log: logs/remote.log
+dry_run: false                  # true = mouse, keys and commands are only logged

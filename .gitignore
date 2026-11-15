@@ -1,0 +1,13 @@
+# Created on each machine, never shared.
+# The secret login key and the tunnel address live in data/ -- never commit it.
+.venv/
+data/
+logs/
+__pycache__/
+*.pyc
+
+# Big, downloaded by setup.bat instead of being stored in the repo.
+tools/
+
+# The phone app's build tools; the built app in app/dist IS committed.
+app/node_modules/

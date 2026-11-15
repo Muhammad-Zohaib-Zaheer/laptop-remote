@@ -1,0 +1,65 @@
+:root {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --line: #30363d;
+  --text: #e6edf3;
+  --dim: #8b949e;
+  --accent: #29d5ff;
+  --warn: #ff6b6b;
+  --radius: 12px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body, #root { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font: 16px -apple-system, system-ui, sans-serif; overscroll-behavior: none; }
+button, input { font: inherit; color: inherit; }
+button { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 10px 14px; }
+button:active { background: var(--line); }
+button:disabled { opacity: .5; }
+input { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 10px 12px; min-width: 0; flex: 1; font-size: 16px; /* 16px: iOS does not zoom in */ }
+form { display: flex; gap: 8px; }
+
+.app { display: flex; flex-direction: column; height: 100%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left); }
+header { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--warn); }
+.dot.on { background: #3fb950; }
+.chips { margin-left: auto; display: flex; gap: 10px; color: var(--dim); font-size: 13px; }
+main { flex: 1; overflow: auto; min-height: 0; }
+nav { display: flex; border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+nav button { flex: 1; border: 0; border-radius: 0; background: none; color: var(--dim); padding: 14px 0; }
+nav button.active { color: var(--accent); }
+
+.screen { display: flex; flex-direction: column; height: 100%; }
+.view { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; background: #000; }
+.view img { max-width: 100%; max-height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.wait { position: absolute; color: var(--dim); }
+.bar { display: flex; gap: 8px; padding: 8px 16px; }
+.bar button { flex: 1; }
+.keyboard { padding: 0 16px 8px; display: flex; flex-direction: column; gap: 8px; }
+.keys { display: flex; flex-wrap: wrap; gap: 6px; }
+.keys button { padding: 8px 10px; font-size: 14px; }
+
+.sarah { display: flex; flex-direction: column; height: 100%; padding: 16px; gap: 12px; }
+.talk { flex: 1; overflow: auto; display: flex; flex-direction: column; gap: 8px; }
+.talk div { max-width: 80%; padding: 10px 14px; border-radius: 16px; }
+.me { align-self: flex-end; background: #1f6feb; }
+.her { align-self: flex-start; background: var(--panel); border: 1px solid var(--line); }
+.hint { color: var(--dim); padding: 16px; }
+
+.controls { padding: 16px; display: flex; flex-direction: column; gap: 20px; }
+.controls h2 { font-size: 15px; color: var(--dim); font-weight: 500; margin: 0 0 10px; }
+.controls input[type="range"] { width: 100%; padding: 0; accent-color: var(--accent); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.row button { text-transform: capitalize; }
+.warn { border-color: var(--warn); color: var(--warn); }
+.link { background: none; border: 0; color: var(--dim); text-decoration: underline; }
+
+.shell { padding: 16px; display: flex; flex-direction: column; gap: 12px; height: 100%; }
+.shell pre { flex: 1; margin: 0; background: #000; border-radius: var(--radius); padding: 12px;
+  overflow: auto; font: 12px ui-monospace, Menlo, monospace; white-space: pre-wrap; }
+
+.login { padding: 15vh 24px; display: flex; flex-direction: column; gap: 14px; }
+.login p { color: var(--dim); }
