@@ -12,7 +12,9 @@ $Repo        = "https://github.com/Muhammad-Zohaib-Zaheer/laptop-remote"   # the
 $Branch      = "main"
 $Install     = Join-Path $env:USERPROFILE "laptop-remote"     # where it is set up
 $Cloudflared = "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe"
-$PyWinget    = "Python.Python.3.12"                           # used only if Python is missing
+$PyWinget    = "Python.Python.3.12"                           # used if Python is missing and winget exists
+$PyVersion   = "3.12.10"                                      # installed from python.org if winget is absent
+$PyUrl       = "https://www.python.org/ftp/python/$PyVersion/python-$PyVersion-amd64.exe"
 
 function Step($text) { Write-Host "`n==> $text" -ForegroundColor Cyan }
 function Find-Python {
@@ -49,8 +51,17 @@ Set-Location $Install
 Step "Checking Python"
 $py = Find-Python
 if (-not $py) {
-    Write-Host "   Python not found; installing it with winget..."
-    winget install -e --id $PyWinget --accept-source-agreements --accept-package-agreements --silent
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        Write-Host "   Python not found; installing it with winget..."
+        winget install -e --id $PyWinget --accept-source-agreements --accept-package-agreements --silent
+    } else {
+        # No winget (e.g. Windows Sandbox or a clean image): install from python.org silently.
+        Write-Host "   Python and winget both missing; downloading Python $PyVersion from python.org..."
+        $pyExe = Join-Path $env:TEMP "python-$PyVersion-amd64.exe"
+        Invoke-WebRequest $PyUrl -OutFile $pyExe -UseBasicParsing
+        Start-Process $pyExe -ArgumentList "/quiet", "InstallAllUsers=0", "PrependPath=1", "Include_launcher=1", "Include_test=0" -Wait
+        Remove-Item $pyExe -ErrorAction SilentlyContinue
+    }
     $py = Find-Python
 }
 if (-not $py) { throw "Python could not be installed. Install Python 3.12 from python.org, then run setup again." }

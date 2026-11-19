@@ -1,0 +1,21 @@
+﻿<Configuration>
+  <!-- A throwaway Windows to TEST laptop-remote safely. Internet on; the project
+       folder is mapped in read-only so you can run setup.bat without downloading it.
+       Everything here is wiped when the window closes. -->
+  <Networking>Enable</Networking>
+  <!-- vGPU off: on this Intel Core Ultra it drops the sandbox connection ~20s after boot. -->
+  <vGPU>Disable</vGPU>
+  <MemoryInMB>4096</MemoryInMB>
+  <ClipboardRedirection>Enable</ClipboardRedirection>
+  <AudioInput>Disable</AudioInput>
+  <VideoInput>Disable</VideoInput>
+  <PrinterRedirection>Disable</PrinterRedirection>
+  <MappedFolders>
+    <!-- The project on the host, read-only. Inside the sandbox it is C:\lr -->
+    <MappedFolder>
+      <HostFolder>D:\My Work\laptop-remote</HostFolder>
+      <SandboxFolder>C:\lr</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+</Configuration>
